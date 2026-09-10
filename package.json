@@ -1,0 +1,1 @@
+{"private":true,"scripts":{"dev":"vite --host 0.0.0.0","build":"tsc -b && vite build","test":"vitest run","lint":"eslint ."},"devDependencies":{"@vitejs/plugin-react":"latest","typescript":"latest","vite":"latest","vitest":"latest","eslint":"latest"},"dependencies":{"@tanstack/react-query":"latest","react":"latest","react-dom":"latest","zod":"latest"}}

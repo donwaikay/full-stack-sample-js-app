@@ -1,0 +1,3 @@
+import {useQuery} from '@tanstack/react-query';
+const api=(p:string)=>fetch(p).then(r=>{if(!r.ok)throw new Error('Request failed');return r.json()});
+export default function App(){const q=useQuery({queryKey:['health'],queryFn:()=>api('/api/health')});return <main><section className="hero"><span>FULLSTACK PLATFORM</span><h1>Production-ready foundation.</h1><p>React + TypeScript frontend with a scalable API boundary, ready for your business domain and SQL schema.</p><div className="card"><b>API status</b><div>{q.isLoading?'Checking…':q.isError?'Unavailable':'● Online'}</div></div></section></main>}
