@@ -1,2 +1,8 @@
 # Local Netlify folder
 .netlify
+deno.lock
+
+# Local secrets
+.env
+node_modules
+dist

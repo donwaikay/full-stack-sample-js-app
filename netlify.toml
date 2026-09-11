@@ -3,9 +3,20 @@
   publish = "frontend/dist"
   functions = "netlify/functions"
 
+[dev]
+  command = "npm --prefix frontend run dev -- --port 5173"
+  targetPort = 5173
+  publish = "frontend/dist"
+  autoLaunch = false
+
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
   status = 200
 
 [[headers]]

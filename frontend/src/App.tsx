@@ -1,3 +1,27 @@
-import {useQuery} from '@tanstack/react-query';
-const api=(p:string)=>fetch(p).then(r=>{if(!r.ok)throw new Error('Request failed');return r.json()});
-export default function App(){const q=useQuery({queryKey:['health'],queryFn:()=>api('/api/health')});return <main><section className="hero"><span>FULLSTACK PLATFORM</span><h1>Production-ready foundation.</h1><p>React + TypeScript frontend with a scalable API boundary, ready for your business domain and SQL schema.</p><div className="card"><b>API status</b><div>{q.isLoading?'Checking…':q.isError?'Unavailable':'● Online'}</div></div></section></main>}
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Landing from './pages/Landing';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import Browse from './pages/Browse';
+import { useAuth } from './hooks/useAuth';
+
+export default function App() {
+  const { user, isLoading, logout } = useAuth();
+  const navigate = useNavigate();
+
+  if (isLoading) return <div className="loading-screen">Loading…</div>;
+
+  return (
+    <>
+      <Navbar user={user} onLogout={() => logout.mutate(undefined, { onSuccess: () => navigate('/') })} />
+      <Routes>
+        <Route path="/" element={user ? <Navigate to="/browse" replace /> : <Landing />} />
+        <Route path="/login" element={user ? <Navigate to="/browse" replace /> : <Login />} />
+        <Route path="/signup" element={user ? <Navigate to="/browse" replace /> : <Signup />} />
+        <Route path="/browse" element={user ? <Browse user={user} /> : <Navigate to="/login" replace />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </>
+  );
+}
